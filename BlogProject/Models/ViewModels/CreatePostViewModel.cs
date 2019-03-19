@@ -14,11 +14,18 @@ namespace BlogAssignment.Models.ViewModels
         [AllowHtml]
         [Required]
         public string Body { get; set; }
-        [Required]
         public bool Published { get; set; }
+        public int PostId { get; set; }
+        public string UserId { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
         public HttpPostedFileBase Media { get; set; }
         public string MediaUrl { get; set; }
+
+        //public BlogPost()
+        //{
+        //    Comments = new List<Comment>();
+        //    this.Created = DateTime.Now;
+        //}
     }
 }

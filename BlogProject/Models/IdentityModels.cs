@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BlogAssignment.Models.Domain;
+using BlogProject.Models.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -13,10 +14,12 @@ namespace BlogAssignment.Models
     {
 
         public virtual List<Post> Posts { get; set; }
+        public virtual List<Comment> Comments { get; set; }
 
         public ApplicationUser()
         {
             Posts = new List<Post>();
+            Comments = new List<Comment>();
         }
 
 
@@ -37,6 +40,7 @@ namespace BlogAssignment.Models
         }
 
         public DbSet<Post> PostDatabase { get; set; }
+        public DbSet<Comment> CommentDatabase { get; set; }
 
 
         public static ApplicationDbContext Create()

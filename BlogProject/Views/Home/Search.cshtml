@@ -1,0 +1,32 @@
+﻿@model List<IndexPostViewModel>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<div>
+    <h4>IndexPostViewModel</h4>
+    <hr />
+    @if (Model.Any())
+    {
+        <table>
+
+            @foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.Title</td>
+                    <td>@record.Published</td>
+                    <td>@record.User</td>
+                    <td>@record.DateCreated</td>
+                    <td>@record.DateUpdated</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+<p>
+    
+    @Html.ActionLink("Back to List", "Index")
+</p>

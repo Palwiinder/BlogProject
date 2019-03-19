@@ -1,6 +1,8 @@
 ﻿@model ShowPostsViewModel
 @{
-    ViewBag.Title = "fullDetail";
+    ViewBag.Title = "FullDetail";
+    //string Slug = Model.Title.ToLower();
+    //Slug = Slug.Replace(" ", "-");
 }
 
 <h2>Post</h2>
@@ -13,10 +15,61 @@
 }
 else
 {
-<div class="row">
-    <div class="col-md-2">
-        <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" />
+    <div class="row">
+        <div class="col-md-2">
+            <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" />
+        </div>
     </div>
-</div>
 
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form action="@Url.Action("Create","Comment", new {  })" method="post">
+        <div class="form-group">
+            <textarea name="Body"></textarea>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>}
+
+@if (!Model.Comments.Any())
+{
+    <div style="margin-top:15px;">
+        <p><strong>You have no Comments</strong></p>
+    </div>
+}
+else
+{
+    <form></form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Post Title</th>
+                <th>Published</th>
+                <th>Publishedby</th>
+                <th>DateCreated</th>
+                <th>DateUpdated</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var record in Model.Comments)
+            {
+                if ((User.IsInRole("Admin")))
+                {
+
+                    <tr>
+                        <td>@record.Body</td>
+                        <td>@record.UserName</td>
+                        <td>record.UserId</td>
+                        <td>@record.DateCreated</td>
+                        <td>@record.DateUpdated</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 }
