@@ -77,7 +77,7 @@ namespace BlogAssignment.Controllers
                     return View();
                 }
             }
-
+            string userId = User.Identity.GetUserId();
 
             Post post;
 
@@ -85,7 +85,7 @@ namespace BlogAssignment.Controllers
             {
                 
                 post = new Post();
-                //post.UserId = userId;
+                post.UserId = userId;
                 post.Title = formData.Title;
                 post.Slug = Post.MakeSlug(post.Title);
                 var slug = post.Slug;
@@ -99,7 +99,7 @@ namespace BlogAssignment.Controllers
             }
             else
             {
-                post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id /*&& p.UserId == userId*/);
+                post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id && p.UserId == userId);
 
                 if (post == null)
                 {
@@ -141,8 +141,8 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id);
+            string userId = User.Identity.GetUserId();
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id && p.UserId == userId);
 
             if (post == null)
             {
@@ -172,14 +172,15 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id);
+            
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id );
             if (post == null)
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
             var model = new ShowPostsViewModel()
             {
+                PostId = id.Value,
                 Title = post.Title,
                 Body = post.Body,
                 Comments = post.Comments.Select(p => new ShowCommentViewModel()
@@ -206,9 +207,9 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-
-            var list = DbContext.PostDatabase.ToList();
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.Slug == slug);
+            
+           
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.Slug == slug );
 
             if (post == null)
             {
@@ -216,6 +217,7 @@ namespace BlogAssignment.Controllers
             }
 
             var model = new ShowPostsViewModel();
+            model.PostId = post.PostId;
             model.Title = post.Title;
             model.Body = post.Body;
             model.Comments = post.Comments.Select(p => new ShowCommentViewModel()
@@ -223,7 +225,7 @@ namespace BlogAssignment.Controllers
                 Body = p.Body,
                 DateCreated = p.DateCreated,
                 DateUpdated = p.DateUpdated,
-                
+                CommentId = p.CommentId,
                 ReasonOfUpdating = p.ReasonOfUpdating,
                 UserName = p.User.UserName
             }).ToList();
@@ -244,7 +246,8 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id);
+            string userId = User.Identity.GetUserId();
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id && p.UserId == userId);
             if (post != null)
             {
                 DbContext.PostDatabase.Remove(post);
@@ -276,6 +279,7 @@ namespace BlogAssignment.Controllers
                    Title = p.Title,
                    Slug = p.Slug,
                    Body = p.Body,
+                   UserId = p.UserId,
                    Published = p.Published,
                    DateCreated = p.DateCreated,
                    DateUpdated = p.DateUpdated,

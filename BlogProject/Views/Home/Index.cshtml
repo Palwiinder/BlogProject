@@ -38,135 +38,142 @@
             }
             else
             {
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Post Title</th>
-                            <th>Published</th>
-                            <th>Publishedby</th>
-                            <th>DateCreated</th>
-                            <th>DateUpdated</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                @*<table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Post Title</th>
+                    <th>Published</th>
 
-                        @foreach (var record in Model)
-                        {
-                            if ((User.IsInRole("Admin")))
+                    <th>DateCreated</th>
+                    <th>DateUpdated</th>
+                </tr>
+            </thead>
+            <tbody>*@
+
+
+
+                foreach (var record in Model)
+                {
+                    if ((User.IsInRole("Admin")))
+                    {
+                        <hr>
+                        <div class="post-preview">
+                            <a href="post.html">
+                                <h2 class="post-title">
+                                    @record.Title
+                                </h2>
+
+                            </a>
+                            <span class="post-meta">
+                                Posted by
+                                
+                                    @record.User.UserName
+                            </span>
+                            <span class="post-meta">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
+                                }
+                            </span>
+                            <span style="padding-left:4px" class="post-meta">
+                                <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
+                            </span>
+                            <div class="post-meta">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
+                                        <a href="#" class="btn-delete">Delete</a>
+                                    </form>}
+                            </div>
+
+                        </div>
+                        @*<tr>
+                        <td>@record.Title</td>
+                        <td>@record.Published</td>
+
+                        <td>@record.DateCreated</td>
+                        <td>@record.DateUpdated</td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
                             {
-
-                                <tr>
-                                    <td>@record.Title</td>
-                                    <td>@record.Published</td>
-                                    <td>@record.UserId</td>
-                                    <td>@record.DateCreated</td>
-                                    <td>@record.DateUpdated</td>
-                                    <td>
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
-                                                <a href="#" class="btn-delete">Delete</a>
-                                            </form>}
-                                    </td>
-                                </tr>
+                                <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
                             }
-                            else if (record.Published == true && !(User.IsInRole("Admin")))
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
+                            @if (User.IsInRole("Admin"))
                             {
+                                <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
+                                    <a href="#" class="btn-delete">Delete</a>
+                                </form>}
+                        </td>
+                    </tr>*@
+                    }
+                    else if (record.Published == true && !(User.IsInRole("Admin")))
+                    {
 
-                                <tr>
-                                    <td>@record.Title</td>
-                                    <td>@record.Published</td>
-                                    <td>@record.User</td>
-                                    <td>@record.DateCreated</td>
-                                    <td>@record.DateUpdated</td>
-                                    <td>
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
-                                        @if (User.IsInRole("Admin"))
-                                        {
-                                            <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
-                                                <a href="#" class="btn-delete">Delete</a>
-                                            </form>}
-                                    </td>
-                                </tr>
+                        <hr>
+                        <div class="post-preview">
+                            <a href="post.html">
+                                <h2 class="post-title">
+                                    @record.Title
+                                </h2>
+                                <h2 class="post-title">
+                                    @record.Published
+                                </h2>
+                                <h2 class="post-title">
+                                    @record.DateCreated
+                                </h2>
+                                <h2 class="post-title">
+                                    @record.DateUpdated
+                                </h2>
+                            </a>
+                            <span class="post-meta">
+                                Posted by
+                                @record.User.UserName
+                            </span>
+                            <span>
+                                <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
+                            </span>
+                            <span>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
+                                }
+                            </span>
+                            <div>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
+                                        <a href="#" class="btn-delete">Delete</a>
+                                    </form>}
+                            </div>
+                        </div>
+                        @*<tr>
+                        <td>@record.Title</td>
+                        <td>@record.Published</td>
+                        <td>@record.DateCreated</td>
+                        <td>@record.DateUpdated</td>
+                        <td>
+                            <a href="@Url.Action("DetailsByTitle", "Home", new { slug = record.Slug })">ReadMore....</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("Edit", "Home", new { id = record.PostId })">Edit</a>
                             }
-                        }
-                    </tbody>
-                </table>
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <form method="post" action="@Url.Action("Delete", "Home", new { id = record.PostId })">
+                                    <a href="#" class="btn-delete">Delete</a>
+                                </form>}
+                        </td>
+                    </tr>*@
+                    }
+                }
+                @*</tbody>
+            </table>*@
             }
-
-            @*<div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            Man must explore, and this is exploration at its greatest
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Problems look mighty small from 150 miles up
-                        </h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">Start Bootstrap</a>
-                        on September 24, 2019
-                    </p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
-                        </h2>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">Start Bootstrap</a>
-                        on September 18, 2019
-                    </p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            Science has not yet mastered prophecy
-                        </h2>
-                        <h3 class="post-subtitle">
-                            We predict too much for the next year and yet far too little for the next ten.
-                        </h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">Start Bootstrap</a>
-                        on August 24, 2019
-                    </p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="post.html">
-                        <h2 class="post-title">
-                            Failure is not an option
-                        </h2>
-                        <h3 class="post-subtitle">
-                            Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-                        </h3>
-                    </a>
-                    <p class="post-meta">
-                        Posted by
-                        <a href="#">Start Bootstrap</a>
-                        on July 8, 2019
-                    </p>
-                </div>*@
 
             <hr>
             <div class="clearfix">
@@ -176,3 +183,23 @@
     </div>
 </div>
 <hr>
+
+<!--Post-->
+<!--
+<hr>
+<div class="post-preview">
+    <a href="post.html">
+        <h2 class="post-title">
+            Failure is not an option
+        </h2>
+        <h3 class="post-subtitle">
+            Many say exploration is part of our destiny, but it’s actually our duty to future generations.
+        </h3>
+    </a>
+    <p class="post-meta">
+        Posted by
+        <a href="#">Start Bootstrap</a>
+        on July 8, 2019
+    </p>
+</div>
+-->

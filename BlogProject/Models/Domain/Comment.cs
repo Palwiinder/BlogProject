@@ -12,7 +12,7 @@ namespace BlogProject.Models.Domain
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
         public int CommentId { get; set; }
-       //public int UserId { get; set; }
+        public string UserId { get; set; }
         public string AuthorId { get; set; }
         public string UserName { get; set; }
         public virtual ApplicationUser User { get; set; }

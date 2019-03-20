@@ -12,10 +12,11 @@ namespace BlogProject.Models.ViewModels
     {
         [Required]
         public string Body { get; set; }
-        [Required]
+        
         public string ReasonOfUpdating { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
         public virtual ApplicationUser User { get; set; }
+        public int PostId { get;set; }
     }
 }
