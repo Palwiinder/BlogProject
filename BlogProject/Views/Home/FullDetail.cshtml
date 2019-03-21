@@ -20,12 +20,11 @@ else
 {
     <div class="row">
         <div class="col-md-2">
-            <img style="width:100%" class="img-responsive" src="@Url.Content(Model.MediaUrl)" />
+            <img class="img-responsive" src="@Url.Content(Model.MediaUrl)" />
         </div>
     </div>
 
 }
-
 
 
 
@@ -37,52 +36,48 @@ else
 }
 else
 {
+    <form>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-            @foreach (var record in Model.Comments)
-            {
-                if ((User.IsInRole("Admin")))
+        <table class="table table-striped">
+            
+            <tbody>
+                @foreach (var record in Model.Comments)
                 {
+                    if ((User.IsInRole("Admin")))
+                    {
+                        <tr>
+                            <td>@record.Body</td>
+                            <td>@record.UserName</td>
+                            <td>@record.CommentId</td>
+                            <td>@record.UserId</td>
+                            <td>@record.ReasonOfUpdating</td>
+                            <td>@record.DateCreated</td>
+                            <td>@record.DateUpdated</td>
+                            <td>
 
-                    <tr>
-                        <td>@record.Body</td>
-                        <td>@record.UserName</td>
-                        <td>@record.UserId</td>
-                        <td>@record.ReasonOfUpdating</td>
-                        <td>@record.DateCreated</td>
-                        <td>@record.DateUpdated</td>
-                        <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("Edit", "Comment", new { id = record.CommentId })">Edit</a>
 
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a href="@Url.Action("Edit", "Comment", new { id = record.CommentId })">Edit</a>
-                               
                                     <form method="post" action="@Url.Action("Delete", "Comment", new { id = record.CommentId })">
                                         <a href="#" class="btn-delete">Delete</a>
                                     </form>
-                            }
-                        </td>
-                    </tr>
+                                }
+                            </td>
+                        </tr>
+
+                    }
 
                 }
-
-            }
-        </tbody>
-    </table>
-if (User.Identity.IsAuthenticated)
-{
-    <form action="@Url.Action("Create","Comment", new { PostId = Model.PostId })" method="post">
-        <div class="form-group">
-            <textarea name="Body"></textarea>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>}
-}
+            </tbody>
+        </table>
+    </form>
+    if (User.Identity.IsAuthenticated)
+    {
+        <form action="@Url.Action("Create","Comment", new { PostId = Model.PostId })" method="post">
+            <div class="form-group">
+                <textarea name="Body"></textarea>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>}
+}  

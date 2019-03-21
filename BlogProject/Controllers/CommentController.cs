@@ -47,7 +47,8 @@ namespace BlogProject.Controllers
 
                 comment = new Comment();
                 comment.Body = formData.Body;
-                //comment.AuthorId = userId;               
+
+                comment.AuthorId = userId;               
                 comment.UserId = userId;
                 comment.User = user;
 
