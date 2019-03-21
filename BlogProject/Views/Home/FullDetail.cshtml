@@ -36,15 +36,14 @@ else
 }
 else
 {
-    <form>
+    <div>
 
         <table class="table table-striped">
             
             <tbody>
                 @foreach (var record in Model.Comments)
                 {
-                    if ((User.IsInRole("Admin")))
-                    {
+                   
                         <tr>
                             <td>@record.Body</td>
                             <td>@record.UserName</td>
@@ -66,13 +65,14 @@ else
                             </td>
                         </tr>
 
-                    }
+                    
 
                 }
             </tbody>
         </table>
-    </form>
-    if (User.Identity.IsAuthenticated)
+    </div>
+}  
+    @if (User.Identity.IsAuthenticated)
     {
         <form action="@Url.Action("Create","Comment", new { PostId = Model.PostId })" method="post">
             <div class="form-group">
@@ -80,4 +80,3 @@ else
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>}
-}  

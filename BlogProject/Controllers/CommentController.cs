@@ -71,7 +71,7 @@ namespace BlogProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (!id.HasValue)
