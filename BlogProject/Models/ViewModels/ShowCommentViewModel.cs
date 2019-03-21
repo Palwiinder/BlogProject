@@ -8,7 +8,6 @@ namespace BlogProject.Models.ViewModels
 {
     public class ShowCommentViewModel
     {
-        
         public string Body { get; set; }
         public int PostId { get; set; }
         public int CommentId { get; set; }

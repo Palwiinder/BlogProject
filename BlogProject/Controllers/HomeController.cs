@@ -83,7 +83,7 @@ namespace BlogAssignment.Controllers
 
             if (!id.HasValue)
             {
-                
+
                 post = new Post();
                 post.UserId = userId;
                 post.Title = formData.Title;
@@ -152,7 +152,7 @@ namespace BlogAssignment.Controllers
             var model = new CreatePostViewModel();
             model.Title = post.Title;
             model.Body = post.Body;
-           
+
             model.DateCreated = post.DateUpdated;
             model.MediaUrl = post.MediaUrl;
 
@@ -172,8 +172,8 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-            
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id );
+
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id);
             if (post == null)
             {
                 return RedirectToAction(nameof(HomeController.Index));
@@ -189,10 +189,10 @@ namespace BlogAssignment.Controllers
                     DateCreated = p.DateCreated,
                     DateUpdated = p.DateUpdated,
                     ReasonOfUpdating = p.ReasonOfUpdating,
-                   
+
                     UserName = p.User.UserName
                 }).ToList(),
-            DateCreated = post.DateCreated,
+                DateCreated = post.DateCreated,
                 MediaUrl = post.MediaUrl
             };
             return View(model);
@@ -207,9 +207,9 @@ namespace BlogAssignment.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index));
             }
-            
-           
-            var post = DbContext.PostDatabase.FirstOrDefault(p => p.Slug == slug );
+
+
+            var post = DbContext.PostDatabase.FirstOrDefault(p => p.Slug == slug);
 
             if (post == null)
             {
@@ -231,7 +231,7 @@ namespace BlogAssignment.Controllers
             }).ToList();
             model.Published = post.Published;
             model.DateCreated = post.DateCreated;
-            
+
             model.MediaUrl = post.MediaUrl;
             return View("FullDetail", model);
 
@@ -250,6 +250,7 @@ namespace BlogAssignment.Controllers
             var post = DbContext.PostDatabase.FirstOrDefault(p => p.PostId == id && p.UserId == userId);
             if (post != null)
             {
+                post.Comments.Clear();
                 DbContext.PostDatabase.Remove(post);
                 DbContext.SaveChanges();
             }

@@ -7,23 +7,39 @@
 <h2>Search</h2>
 
 <div>
-    <h4>IndexPostViewModel</h4>
+    
     <hr />
     @if (Model.Any())
     {
-        <table>
+   
 
-            @foreach (var record in Model)
-            {
-                <tr>
-                    <td>@record.Title</td>
-                    <td>@record.Published</td>
-                    <td>@record.User</td>
-                    <td>@record.DateCreated</td>
-                    <td>@record.DateUpdated</td>
-                </tr>
-            }
-        </table>
+        foreach (var record in Model)
+        {
+            <div class="post-preview">
+                
+                    <p class="post-title">
+                        @record.Title
+                    </p>
+                    <p class="post-title">
+                        @record.Published
+                    </p>
+                    <p class="post-meta">
+                        Posted by
+                        @record.User.UserName
+                        on  @record.DateCreated
+                        Edited on
+                        @record.DateUpdated
+                    </p>
+            </div>
+            
+                @*<td>@record.Title</td>
+                <td>@record.Published</td>
+                <td>@record.User.UserName</td>
+                <td>@record.DateCreated</td>
+                <td>@record.DateUpdated</td>
+            </tr>*@
+        }
+    
     }
 </div>
 <p>
